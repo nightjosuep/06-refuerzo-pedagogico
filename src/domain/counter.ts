@@ -53,7 +53,23 @@ export interface ContadorConfig {
  */
 export function calcularValor(config: ContadorConfig, direccion: Direccion): number {
   // 👇 TODO: reemplaza este return por tu lógica de cálculo
-  return config.valor;
+  let nuevoValor = config.valor;
+
+  if (direccion === 'incrementar') {
+    nuevoValor = config.valor + config.paso;
+  } else if (direccion === 'decrementar') {
+    nuevoValor = config.valor - config.paso;
+  }
+
+  if (nuevoValor > config.maximo) {
+    return config.maximo;
+  }
+  
+  if (nuevoValor < config.minimo) {
+    return config.minimo;
+  }
+
+  return nuevoValor;
 }
 
 /**
@@ -66,5 +82,12 @@ export function calcularValor(config: ContadorConfig, direccion: Direccion): num
  */
 export function estadoUI(valor: number, config: ContadorConfig): EstadoUI {
   // 👇 TODO: reemplaza este return por tu lógica de unión discriminada
+  if (valor <= config.minimo) {
+    return 'MINIMO';
+  }
+  
+  if (valor >= config.maximo) {
+    return 'MAXIMO';
+  }
   return 'IDLE';
 }
